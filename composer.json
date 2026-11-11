@@ -1,0 +1,36 @@
+{
+    "name": "alfacode-team/hkm-plugin-websocket",
+    "description": "HKM Kernel plugin providing 'realtime.websocket' — an RFC 6455 WebSocket server with authorised channel subscriptions, fanned out across workers through PubSubPort.",
+    "type": "library",
+    "license": "MIT",
+    "keywords": ["hkm-kernel", "plugin", "php", "realtime.websocket", "websocket", "rfc6455", "realtime", "pubsub", "openswoole"],
+    "require": {
+        "php": ">=8.4",
+        "ext-json": "*",
+        "ext-mbstring": "*",
+        "alfacode-team/php-service-platform": "dev-master"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^11 || ^12 || ^13"
+    },
+    "suggest": {
+        "ext-openswoole": "Required to RUN the server. Not required to use the frame codec, the handshake or the registry, which is why the protocol is testable without it."
+    },
+    "autoload": {
+        "psr-4": {
+            "Plugins\\WebSocket\\": ""
+        },
+        "exclude-from-classmap": ["tests/"]
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Tests\\Unit\\Plugins\\WebSocket\\": "tests/"
+        }
+    },
+    "extra": {
+        "//": "No WebSocket library. RFC 6455 framing is a header, a length in one of three forms, and a four-byte XOR — and the parts that are easy to get wrong are the parts a library's defaults hide: whether an unmasked client frame is refused, whether a non-minimal length is refused, and whether Origin is checked at all. Those are this application's security posture, not a dependency's."
+    },
+    "config": { "sort-packages": true },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}

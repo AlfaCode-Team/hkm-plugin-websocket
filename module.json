@@ -1,0 +1,44 @@
+{
+    "name": "websocket",
+    "version": "1.1.0",
+    "kernel": "^1.19.0",
+    "solves": "realtime.websocket",
+    "type": "module",
+    "description": "An RFC 6455 WebSocket server with per-channel authorised subscriptions. The frame codec, the handshake and the subscription registry are native and testable without a socket; the server runs on OpenSwoole and fans events out across workers through the kernel's PubSubPort, because a realtime server with more than one worker cannot deliver a locally-raised event to a client held by a different process.",
+
+    "requires": ["auth.identity"],
+
+    "exposes": [
+        "Plugins\\WebSocket\\Application\\Services\\Broadcaster",
+        "Plugins\\WebSocket\\Application\\Services\\ConnectionRegistry"
+    ],
+
+    "emits": [],
+    "listens": [],
+
+    "commands": [
+        "Plugins\\WebSocket\\Infrastructure\\Cli\\RealtimeServeCommand",
+        "Plugins\\WebSocket\\Infrastructure\\Cli\\RealtimeStatusCommand",
+        "Plugins\\WebSocket\\Infrastructure\\Cli\\RealtimeAuthorizeCommand"
+    ],
+
+    "config": [
+        { "key": "WEBSOCKET_ORIGINS", "type": "string", "required": true },
+        { "key": "WEBSOCKET_REQUIRE_ORIGIN", "type": "bool", "required": false, "default": true },
+        { "key": "WEBSOCKET_HOST", "type": "string", "required": false, "default": "127.0.0.1" },
+        { "key": "WEBSOCKET_PORT", "type": "int", "required": false, "default": 9503 },
+        { "key": "WEBSOCKET_WORKERS", "type": "int", "required": false, "default": 2 },
+        { "key": "WEBSOCKET_PATH", "type": "string", "required": false, "default": "/realtime" },
+        { "key": "WEBSOCKET_BUS_CHANNEL", "type": "string", "required": false, "default": "hkm.rt.events" },
+        { "key": "WEBSOCKET_AUTH_SUBJECT", "type": "string", "required": false, "default": "hkm.rt.authorize" },
+        { "key": "WEBSOCKET_MAX_CONNECTIONS", "type": "int", "required": false, "default": 10000 },
+        { "key": "WEBSOCKET_MAX_CHANNELS", "type": "int", "required": false, "default": 64 },
+        { "key": "WEBSOCKET_MAX_MESSAGE_BYTES", "type": "int", "required": false, "default": 8388608 },
+        { "key": "WEBSOCKET_IDLE_TIMEOUT", "type": "int", "required": false, "default": 120 },
+        { "key": "WEBSOCKET_PRESENCE", "type": "bool", "required": false, "default": true },
+        { "key": "WEBSOCKET_PRESENCE_TTL", "type": "int", "required": false, "default": 45 },
+        { "key": "WEBSOCKET_PRESENCE_TYPING_TTL", "type": "int", "required": false, "default": 6 },
+        { "key": "WEBSOCKET_PRESENCE_SWEEP_INTERVAL", "type": "int", "required": false, "default": 10 },
+        { "key": "WEBSOCKET_PRESENCE_MAX_MEMBERS", "type": "int", "required": false, "default": 500 }
+    ]
+}

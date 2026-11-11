@@ -1,0 +1,36 @@
+{
+    "lockVersion": 1,
+    "//": "Every string here is published and held outside this plugin. Entries are added by `ground contract:lock --update` and retired with --deprecate \u2014 never deleted.",
+    "surfaces": {
+        "solves": [
+            "realtime.websocket"
+        ],
+        "routes": [],
+        "events": [],
+        "contracts": [
+            "Plugins\\WebSocket\\Application\\Services\\Broadcaster",
+            "Plugins\\WebSocket\\Application\\Services\\ConnectionRegistry"
+        ],
+        "config": [
+            "WEBSOCKET_AUTH_SUBJECT",
+            "WEBSOCKET_BUS_CHANNEL",
+            "WEBSOCKET_HOST",
+            "WEBSOCKET_IDLE_TIMEOUT",
+            "WEBSOCKET_MAX_CHANNELS",
+            "WEBSOCKET_MAX_CONNECTIONS",
+            "WEBSOCKET_MAX_MESSAGE_BYTES",
+            "WEBSOCKET_ORIGINS",
+            "WEBSOCKET_PATH",
+            "WEBSOCKET_PORT",
+            "WEBSOCKET_PRESENCE",
+            "WEBSOCKET_PRESENCE_MAX_MEMBERS",
+            "WEBSOCKET_PRESENCE_SWEEP_INTERVAL",
+            "WEBSOCKET_PRESENCE_TTL",
+            "WEBSOCKET_PRESENCE_TYPING_TTL",
+            "WEBSOCKET_REQUIRE_ORIGIN",
+            "WEBSOCKET_WORKERS"
+        ],
+        "permissions": []
+    },
+    "deprecated": {}
+}

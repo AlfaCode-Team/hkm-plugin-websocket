@@ -1,0 +1,82 @@
+{
+  "//": "ONE rule set, TWO implementations, and this file is what stops them drifting.",
+  "//why": "Plugins\\WebSocket\\Domain\\Channel (PHP) is the original; edge/internal/channel (Go) exists because the edge must refuse a malformed name BEFORE spending a NATS round trip asking PHP about it — otherwise an unauthenticated client chooses how much work the application does, which is a denial-of-service primitive. Two implementations of a security rule drift silently: the stricter one refuses what the other allows, and whichever side a deployment happens to run decides what is reachable. Both test suites read THIS file, so a change made to one implementation and not the other fails on one of them.",
+  "//adding": "Add a vector here FIRST, watch both suites fail, then change both implementations.",
+
+  "valid": [
+    "events",
+    "documents.42",
+    "account.me",
+    "account.0191b3f0-5d4e-7a1b-8c9d-1e2f3a4b5c6d",
+    "collections.7.documents",
+    "tenant_7.orders_v2",
+    "multi-tenant.sub-domain",
+    "Documents.Mine",
+    "ns:scoped.thing",
+    "a",
+    "a.b.c.d.e.f.g.h",
+    "0",
+    "123.456"
+  ],
+
+  "normalises": {
+    "  documents.42  ": "documents.42",
+    "\tdocuments.42": "documents.42",
+    "documents.42\n": "documents.42",
+    "documents.42\r\n": "documents.42",
+    "\r\n documents.42 \t": "documents.42"
+  },
+
+  "invalid": [
+    "",
+    "   ",
+    "\t\n\r",
+
+    "documents.*",
+    "documents.>",
+    "*",
+    ">",
+    "documents.#",
+    "documents.?",
+    "documents.4?",
+
+    "documents 42",
+    "documents\t42",
+    "documents\n42",
+    "documents/42",
+    "documents\\42",
+    "documents|42",
+    "documents;42",
+    "documents,42",
+    "documents+42",
+    "documents=42",
+    "documents@42",
+    "documents(42)",
+    "documents[42]",
+    "documents{42}",
+    "documents'42",
+    "documents\"42",
+    "documents`42",
+    "documents$42",
+    "documents%42",
+    "documents&42",
+    "documents!42",
+    "documents~42",
+    "documents^42",
+
+    "documents.",
+    ".documents",
+    ".",
+    "..",
+    "documents..42",
+    "a...b",
+    "documents.42.",
+
+    "café.42",
+    "文書.42",
+    "документы.42"
+  ],
+
+  "//control-bytes": "Not listed above because JSON cannot carry a raw NUL. Both suites generate every byte 0x00-0x1F plus 0x7F in a name and assert refusal, which is the case PHP's default trim() silently REPAIRED into a valid channel before it was pinned.",
+  "//length": "Both suites assert 128 bytes is accepted and 129 refused, generated rather than listed."
+}
